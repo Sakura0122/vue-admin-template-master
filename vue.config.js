@@ -13,7 +13,10 @@ const name = defaultSettings.title || 'vue Admin Template' // page title
 // For example, Mac: sudo npm run
 // You can change the port by the following methods:
 // port = 9528 npm run dev OR npm run dev --port = 9528
-const port = process.env.port || process.env.npm_config_port || 9528 // dev port
+// 环境变量中的值 如果不以规范规范命名的话在客户端代码（以后会参与到项目展示的时候代码）中是读不到的
+// 但不以规范来命名 在webpack环境下是可以读到的
+// 避免这个问题：统一按规范命名
+const port = process.env.VUE_APP_PORT
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -86,7 +89,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()
