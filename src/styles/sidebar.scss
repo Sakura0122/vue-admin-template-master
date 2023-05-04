@@ -10,13 +10,12 @@
   .sidebar-container {
     // 第一个参数是 渐变开始的位置
     // 第二个 第三个参数 是 从第二个颜色 渐变到第三个颜色
-    background: -webkit-linear-gradient(bottom, #3d6df8, #5b8cff);
     transition: width 0.28s;
     width: $sideBarWidth !important;
-    background-color: $menuBg;
+    background: $menuBg -webkit-linear-gradient(bottom, #3d6df8, #5b8cff);
     height: 100%;
     position: fixed;
-    font-size: 0px;
+    font-size: 0;
     top: 0;
     bottom: 0;
     left: 0;
@@ -34,7 +33,7 @@
     }
 
     .el-scrollbar__bar.is-vertical {
-      right: 0px;
+      right: 0;
     }
 
     .el-scrollbar {
@@ -194,7 +193,7 @@
   // mobile responsive
   .mobile {
     .main-container {
-      margin-left: 0px;
+      margin-left: 0;
     }
 
     .sidebar-container {
