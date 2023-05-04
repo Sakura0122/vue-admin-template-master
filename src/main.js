@@ -15,7 +15,8 @@ import store from './store'
 import router from './router'
 
 import '@/icons' // icon
-import '@/permission' // permission control
+import '@/permission'
+import request from '@/utils/request' // permission control
 
 // set ElementUI lang to EN
 // Vue.use 执行后 使用Vue.component方法
@@ -24,6 +25,8 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+// 构造函数的原型对象上挂载的方法和属性 都可以被构造函数对应的实例所访问
+Vue.prototype.$request = request
 
 // 固定语法 process.env
 // console.log(process.env)

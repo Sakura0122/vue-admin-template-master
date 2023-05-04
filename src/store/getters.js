@@ -1,6 +1,7 @@
 const getters = {
   sidebar: state => state.app.sidebar,
-  device: state => state.app.device
+  device: state => state.app.device,
+  token: state => state.user.token
   // 在组件中获取sidebar
   // this.$store.state.app.sidebar
 
