@@ -46,7 +46,8 @@ module.exports = {
     // 使用pathRewrite后：http://ihrm.itheima.net/sys/login
     proxy: {
       '/api': {
-        target: 'http://ihrm.itheima.net'
+        // target: 'http://ihrm.itheima.net'
+        target: 'http://ihrm-java.itheima.net'
         // pathRewrite: { '^/api': '' },
       }
     }

@@ -18,13 +18,17 @@ router.beforeEach((to, from, next) => {
       next('/')
       NProgress.done()
     } else {
-      next()
-      NProgress.done()
+      if (!Object.keys(store.state.user.userinfo).length) {
+        store.dispatch('user/getUserInfo').then(res => {
+          next()
+        })
+      } else {
+        next()
+      }
     }
   } else {
     if (whiteList.includes(to.path)) {
       next()
-      NProgress.done()
     } else {
       next('/login')
       NProgress.done()

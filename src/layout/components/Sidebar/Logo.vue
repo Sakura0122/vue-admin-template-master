@@ -70,7 +70,7 @@ export default {
   &.collapse {
     .sidebar-logo {
       margin-right: 0;
-      width: 32px;
+      width: 50px;
       height: 32px;
     }
   }

@@ -16,7 +16,8 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission'
-import request from '@/utils/request' // permission control
+import request from '@/utils/request'
+import * as directives from '@/directives'
 
 // set ElementUI lang to EN
 // Vue.use 执行后 使用Vue.component方法
@@ -27,6 +28,16 @@ Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 // 构造函数的原型对象上挂载的方法和属性 都可以被构造函数对应的实例所访问
 Vue.prototype.$request = request
+
+// 1.使用for...in批量注册自定义指令
+// for (const key in directives) {
+//   Vue.directive(key, directives[key])
+// }
+
+// 2.使用Object.keys批量注册自定义指令
+Object.keys(directives).forEach(key => {
+  Vue.directive(key, directives[key])
+})
 
 // 固定语法 process.env
 // console.log(process.env)
