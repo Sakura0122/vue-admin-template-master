@@ -45,7 +45,9 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -114,4 +116,23 @@ export function param2Obj(url) {
     }
   })
   return obj
+}
+
+/**
+ * 转换列表数据为树状结构
+ * @param list{*[]} 所有列表
+ * @param searchVal{string} 查找数据
+ * @return {*[]}
+ */
+export function transListToTreeData(list, searchVal) {
+  // 思路：先找父级 然后根据父级的id去列表中的所有数据找到与之对应的pid
+  const arr = []
+  list.forEach(item => {
+    if (item.pid === searchVal) {
+      // 找到所有父级
+      item.children = transListToTreeData(list, item.id) || []
+      arr.push(item)
+    }
+  })
+  return arr
 }

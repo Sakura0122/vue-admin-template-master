@@ -12,6 +12,7 @@
         :collapse-transition="false"
         mode="vertical"
       >
+        <!-- 渲染的是没有配置hidden:true的那些路由规则 -->
         <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
@@ -31,6 +32,7 @@ export default {
       'sidebar'
     ]),
     routes() {
+      // 路由规则
       return this.$router.options.routes
     },
     activeMenu() {
