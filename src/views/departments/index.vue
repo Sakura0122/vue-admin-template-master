@@ -1,7 +1,7 @@
 <template>
   <div class="departments-container">
     <div class="app-container">
-      <el-card class="tree-card" v-loading="isLoading">
+      <el-card v-loading="isLoading" class="tree-card">
         <!-- 用了一个行列布局 -->
         <tree-tools :tree-node="company" :is-root="true" @add-depts="showAddDeptsDialog" />
         <el-tree :data="departs" :props="defaultProps" :default-expand-all="true">
