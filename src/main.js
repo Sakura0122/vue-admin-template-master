@@ -18,16 +18,26 @@ import '@/icons' // icon
 import '@/permission'
 import request from '@/utils/request'
 import * as directives from '@/directives'
+import * as filters from '@/filters'
+import components from '@/components'
+import Print from 'vue-print-nb'
 
 // set ElementUI lang to EN
 // Vue.use 执行后 使用Vue.component方法
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
+Vue.use(components)
+Vue.use(Print)
 
 Vue.config.productionTip = false
 // 构造函数的原型对象上挂载的方法和属性 都可以被构造函数对应的实例所访问
 Vue.prototype.$request = request
+
+// 过滤器
+for (const key in filters) {
+  Vue.filter(key, filters[key])
+}
 
 // 1.使用for...in批量注册自定义指令
 // for (const key in directives) {

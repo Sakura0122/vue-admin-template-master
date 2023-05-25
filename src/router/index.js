@@ -58,6 +58,19 @@ export const constantRoutes = [
     }]
   },
 
+  {
+    path: '/import',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '',
+        name: 'import',
+        component: () => import('@/views/import/index.vue')
+      }
+    ]
+  },
+
   // 如果访问的路由在以上规则中没有匹配到 则会匹配 path:'*'
   { path: '*', redirect: '/404', hidden: true }
 ]

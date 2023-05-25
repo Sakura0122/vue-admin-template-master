@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { getSimpleUserList } from '@/api/employees'
+import { getSimpleUserListApi } from '@/api/employees'
 import { addDepartmentApi, editDepartmentApi, getDepartmentDetailApi } from '@/api/departments'
 
 export default {
@@ -151,7 +151,7 @@ export default {
     },
     // 获取员工列表
     async getSimpleUserList() {
-      const { data } = await getSimpleUserList()
+      const { data } = await getSimpleUserListApi()
       this.employeeList = data
     },
     // 提交表单
