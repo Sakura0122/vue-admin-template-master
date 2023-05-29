@@ -1,5 +1,6 @@
 import { getBaseUserInfoApi, getUserInfoApi, loginApi } from '@/api/user'
 import { getToken, removeToken, setToken } from '@/utils/auth'
+import { resetRouter } from '@/router'
 
 const state = {
   token: getToken() || '',
@@ -43,6 +44,10 @@ const actions = {
   logout(context) {
     context.commit('clearToken')
     context.commit('clearUserInfo')
+    // 清除router路由表
+    resetRouter()
+    // 清除vuex路由表
+    context.commit('permission/setRoutes', [], { root: true })
   }
 }
 

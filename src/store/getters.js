@@ -3,7 +3,9 @@ const getters = {
   device: state => state.app.device,
   token: state => state.user.token,
   name: state => state.user.userinfo.username,
-  staffPhoto: state => state.user.userinfo.staffPhoto
+  staffPhoto: state => state.user.userinfo.staffPhoto,
+  routes: state => state.permission.routes,
+  roles: state => state.user.userinfo.roles
   // 在组件中获取sidebar
   // this.$store.state.app.sidebar
 

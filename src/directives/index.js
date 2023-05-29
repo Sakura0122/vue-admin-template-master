@@ -1,3 +1,6 @@
+import store from '@/store'
+import { none } from 'html-webpack-plugin/lib/chunksorter'
+
 export const imgerror = {
   // 当使用这个自定义指令的标签被渲染时就会执行inserted钩子
   // el：表示使用这个指令的标签
@@ -13,5 +16,15 @@ export const imgerror = {
 export const color = {
   inserted(el, binding) {
     el.style.color = binding.value
+  }
+}
+
+// 判断权限
+export const permission = {
+  inserted(el, binding) {
+    const roles = store.getters.roles
+    if (!roles?.points.includes(binding.value)) {
+      el.style.display = 'none'
+    }
   }
 }

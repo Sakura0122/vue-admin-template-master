@@ -16,7 +16,7 @@
               <el-table-column label="描述" align="center" prop="description" />
               <el-table-column label="操作" align="center">
                 <template #default="{row}">
-                  <el-button size="small" type="success">分配权限</el-button>
+                  <el-button size="small" type="success" @click="showAssignDialogFn(row.id)">分配权限</el-button>
                   <el-button size="small" type="primary" @click="editRole(row.id)">编辑</el-button>
                   <el-button size="small" type="danger" @click="delRole(row.id)">删除</el-button>
                 </template>
@@ -86,14 +86,50 @@
           <el-button type="primary" @click="handleAddRole">确定</el-button>
         </template>
       </el-dialog>
+
+      <!-- 分配权限的弹层 -->
+      <el-dialog
+        title="分配权限"
+        :visible="showAssignDialog"
+        :close-on-click-modal="false"
+        @close="closeAssignDialog"
+        @open="openAssignDialog"
+      >
+        <!-- show-checkbox 可以让树状结构变得可选择 -->
+        <!--   default-expand-all 可以让树默认展开全部 -->
+        <el-tree
+          ref="tree"
+          :data="permissionList"
+          :props="{label:'name'}"
+          show-checkbox
+          default-expand-all
+          :check-strictly="true"
+          node-key="id"
+        />
+        <template #footer>
+          <div style="text-align: right;">
+            <el-button @click="closeAssignDialog">取消</el-button>
+            <el-button type="primary" @click="editRolePermission">确定</el-button>
+          </div>
+        </template>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import { addRoleApi, delRoleApi, getRoleDetail, getRoleListApi, updateRole } from '@/api/setting'
+import {
+  addRoleApi,
+  delRoleApi,
+  editRolePermissionApi,
+  getRoleDetailApi,
+  getRoleListApi,
+  updateRole
+} from '@/api/setting'
 import { mapState } from 'vuex'
 import { getCompanyInfoApi } from '@/api/company'
+import { getPermissionListApi } from '@/api/permission'
+import { transListToTreeData } from '@/utils'
 
 export default {
   name: 'Setting',
@@ -125,7 +161,15 @@ export default {
         companyAddress: '',
         mailbox: '',
         remarks: ''
-      }
+      },
+      // 控制分配权限的弹框
+      showAssignDialog: false,
+      // 分配权限的角色id
+      roleId: '',
+      // 权限列表
+      permissionList: [],
+      // 角色已有的权限集合
+      permIds: []
     }
   },
   computed: {
@@ -204,13 +248,45 @@ export default {
     },
     // 编辑角色
     async editRole(id) {
-      const { data } = await getRoleDetail(id)
+      const { data } = await getRoleDetailApi(id)
       this.form = data
       this.showDialog = true
     },
     async getCompanyInfo() {
       const { data } = await getCompanyInfoApi(this.userinfo.companyId)
       this.companyForm = data
+    },
+
+    // 打开权限弹窗
+    showAssignDialogFn(id) {
+      this.showAssignDialog = true
+      this.roleId = id
+    },
+    // 获取所有权限列表
+    async getPermissionList() {
+      const { data } = await getPermissionListApi()
+      this.permissionList = transListToTreeData(data, '0')
+    },
+    // 关闭权限弹窗
+    closeAssignDialog() {
+      this.showAssignDialog = false
+      this.$refs.tree.setCheckedKeys([])
+    },
+    // 打开权限弹窗发生的事件
+    async openAssignDialog() {
+      // 获取所有的权限列表
+      this.getPermissionList()
+      // 获取当前角色已有的权限
+      const { data: { permIds }} = await getRoleDetailApi(this.roleId)
+      this.permIds = permIds
+      this.$refs.tree.setCheckedKeys(this.permIds)
+    },
+    // 编辑权限
+    async editRolePermission() {
+      const checkPermIds = this.$refs.tree.getCheckedKeys()
+      await editRolePermissionApi({ id: this.roleId, permIds: checkPermIds })
+      this.$message.success('恭喜，修改成功！')
+      this.closeAssignDialog()
     }
   }
 }

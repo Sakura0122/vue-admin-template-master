@@ -46,7 +46,7 @@ export const addRoleApi = (data) => {
  * @param id 角色id
  * @return {*}
  */
-export const getRoleDetail = (id) => {
+export const getRoleDetailApi = (id) => {
   return request({
     url: `/sys/role/${id}`
   })
@@ -60,6 +60,19 @@ export const getRoleDetail = (id) => {
 export const updateRole = (data) => {
   return request({
     url: `/sys/role/${data.id}`,
+    method: 'put',
+    data
+  })
+}
+
+/**
+ * 给角色分配权限
+ * @param {*} data 接口所需数据
+ * @return {*}
+ */
+export const editRolePermissionApi = (data) => {
+  return request({
+    url: '/sys/role/assignPrem',
     method: 'put',
     data
   })

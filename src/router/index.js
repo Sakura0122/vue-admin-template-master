@@ -69,16 +69,16 @@ export const constantRoutes = [
         component: () => import('@/views/import/index.vue')
       }
     ]
-  },
+  }
 
   // 如果访问的路由在以上规则中没有匹配到 则会匹配 path:'*'
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: [...constantRoutes, ...asyncRoutes]
+  routes: [...constantRoutes]
 })
 
 const router = createRouter()

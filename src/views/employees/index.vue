@@ -19,8 +19,12 @@
           <el-table-column align="center" label="序号" type="index" width="100" :index="indexMethod" />
           <el-table-column align="center" label="头像" prop="staffPhoto">
             <template #default="{row}">
-              <img @click="showImgDialogFn(row.staffPhoto)" v-imgerror="errorImg" :src="row.staffPhoto"
-                   class="avatar_photo" alt=""
+              <img
+                v-imgerror="errorImg"
+                :src="row.staffPhoto"
+                class="avatar_photo"
+                alt=""
+                @click="showImgDialogFn(row.staffPhoto)"
               >
             </template>
           </el-table-column>
@@ -40,12 +44,12 @@
           </el-table-column>
           <el-table-column align="center" label="操作" fixed="right" width="280">
             <template #default="{row}">
-              <el-button type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
-              <el-button type="text" size="small">转正</el-button>
-              <el-button type="text" size="small">调岗</el-button>
-              <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
+              <el-button v-permission="'EMP_LOOK'" type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
+              <!--<el-button type="text" size="small">转正</el-button>-->
+              <!--<el-button type="text" size="small">调岗</el-button>-->
+              <!--<el-button type="text" size="small">离职</el-button>-->
+              <el-button v-permission="'EMP_ROLE'" type="text" size="small" @click="showEditRoleDialogFn(row.id)">角色</el-button>
+              <el-button v-permission="'EMP_DELETE'" type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -66,6 +70,7 @@
           <canvas ref="myCanvas" />
         </el-row>
       </el-dialog>
+      <assignRole :show-role-dialog.sync="showRoleDialog" :user-id="userId" />
     </div>
   </div>
 </template>
@@ -77,10 +82,12 @@ import AddEmployee from '@/views/employees/components/add-employee.vue'
 import { getFormatTime } from '@/filters'
 import errorImg from '@/assets/common/404.png'
 import QrCode from 'qrcode'
+import AssignRole from '@/views/employees/components/assign-role.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Employees',
-  components: { AddEmployee },
+  components: { AssignRole, AddEmployee },
   // filters: {
   //   getFormatTime(value) {
   //     return dayjs(value).format('YYYY-MM-DD')
@@ -97,8 +104,14 @@ export default {
       showDialog: false,
       errorImg,
       // 二维码图片
-      showCodeDialog: false
+      showCodeDialog: false,
+      // 角色弹窗
+      showRoleDialog: false,
+      userId: ''
     }
+  },
+  computed: {
+    ...mapGetters(['roles'])
   },
   created() {
     this.getUserList()
@@ -208,8 +221,14 @@ export default {
         QrCode.toCanvas(this.$refs.myCanvas, url)
       })
     },
+    // 关闭二维码预览
     hideCodeDialogFn() {
       this.showCodeDialog = false
+    },
+    // 点击角色
+    showEditRoleDialogFn(id) {
+      this.showRoleDialog = true
+      this.userId = id
     }
   }
 }

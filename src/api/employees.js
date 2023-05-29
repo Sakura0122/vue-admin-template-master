@@ -124,3 +124,16 @@ export function updateJobApi(data) {
     data
   })
 }
+
+/**
+ * 给员工分配角色
+ * @param {*} data 分配的角色数据
+ * @returns {*}
+ */
+export function assignRolesApi(data) {
+  return request({
+    url: '/sys/user/assignRoles',
+    method: 'put',
+    data
+  })
+}

@@ -17,7 +17,7 @@
 
       <el-form-item prop="mobile">
         <span class="svg-container">
-          <svg-icon icon-class="user"/>
+          <svg-icon icon-class="user" />
         </span>
         <el-input
           ref="mobile"
@@ -32,7 +32,7 @@
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password"/>
+          <svg-icon icon-class="password" />
         </span>
         <el-input
           :key="passwordType"
@@ -46,7 +46,7 @@
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
@@ -63,7 +63,7 @@
 
       <div class="tips">
         <span style="margin-right:20px;">手机号: 13800000002</span>
-        <span> 密码: 123456</span>
+        <span> 密码: hm#qd@23!</span>
       </div>
 
     </el-form>
@@ -77,7 +77,7 @@ export default {
   name: 'Login',
   data() {
     const validateMobile = (rule, value, callback) => {
-      if (!/^1[3,9]\d{9}/.test(value)) {
+      if (!/^1[2-9]\d{9}/.test(value)) {
         callback(new Error('手机号长度应为11位'))
       } else {
         callback()
@@ -86,7 +86,7 @@ export default {
     return {
       loginForm: {
         mobile: '13800000002',
-        password: '123456'
+        password: 'hm#qd@23!'
       },
       loginRules: {
         mobile: [
