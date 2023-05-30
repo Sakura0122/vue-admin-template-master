@@ -1,18 +1,20 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
+    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <div class="app-breadcrumb">
-      后台管理系统
+      {{ $t('navbar.title') }}
       <span class="breadBtn">体验版</span>
     </div>
     <!-- <breadcrumb class="breadcrumb-container" />-->
 
     <div class="right-menu">
+      <lang />
+      <screen-full class="right-menu-item" />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img v-imgerror="defaultImg" :src="staffPhoto" class="user-avatar">
-          <span class="name">{{ name }}</span>
-          <i class="el-icon-caret-bottom" style="color:#fff"/>
+          <span class="name">{{ $t('navbar.version') }}</span>
+          <i class="el-icon-caret-bottom" style="color:#fff" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
@@ -123,7 +125,7 @@ export default {
       height: 100%;
       font-size: 18px;
       color: #5a5e66;
-      vertical-align: text-bottom;
+      vertical-align: middle;
 
       &.hover-effect {
         cursor: pointer;

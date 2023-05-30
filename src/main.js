@@ -20,15 +20,19 @@ import request from '@/utils/request'
 import * as directives from '@/directives'
 import * as filters from '@/filters'
 import components from '@/components'
+import i18n from '@/lang'
 import Print from 'vue-print-nb'
 
 // set ElementUI lang to EN
 // Vue.use 执行后 使用Vue.component方法
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
-Vue.use(ElementUI)
+Vue.use(ElementUI, {
+  i18n: (key, value) => i18n.t(key, value)
+})
 Vue.use(components)
 Vue.use(Print)
+// 配置ElementUI的中英切换逻辑
 
 Vue.config.productionTip = false
 // 构造函数的原型对象上挂载的方法和属性 都可以被构造函数对应的实例所访问
@@ -56,5 +60,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   render: h => h(App)
 })
